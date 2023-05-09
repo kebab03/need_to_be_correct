@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+    <h1>Login</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form method="POST" action="{{ url_for('login') }}">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <script>
+      function toggleSwitch() {
+        fetch('/toggle-state', { method: 'POST' })
+          .then(response => response.json())
+          .then(data => {
+            let switchButton = document.querySelector('.toggle-btn');
+            switchButton.classList.toggle('active');
+            let switchLabel = document.querySelector('.toggle-btn .label');
+            switchLabel.innerHTML = `LED 1 is ${data.switch.toUpperCase()}`;
+          })
+          .catch(error => console.error(error));
+      }
+    </script>
+  </body>
+</html>
